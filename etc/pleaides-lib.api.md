@@ -104,7 +104,7 @@ type AuthSession = {
 // @public (undocumented)
 type AvatarDecoration = {
     id: ID;
-    updatedAt: Date | null;
+    updatedAt: DateString | null;
     url: string;
     name: string;
     description: string;
@@ -262,10 +262,10 @@ export type Channels = {
         events: {
             fileCreated: (payload: DriveFile) => void;
             fileUpdated: (payload: DriveFile) => void;
-            fileDeleted: (payload: DriveFile) => void;
+            fileDeleted: (payload: string) => void;
             folderCreated: (payload: DriveFolder) => void;
             folderUpdated: (payload: DriveFolder) => void;
-            folderDeleted: (payload: DriveFolder) => void;
+            folderDeleted: (payload: string) => void;
         };
         receives: null;
     };
@@ -314,7 +314,15 @@ type DriveFile = {
 };
 
 // @public (undocumented)
-type DriveFolder = TODO_2;
+type DriveFolder = {
+    id: ID;
+    createdAt: DateString;
+    name: string;
+    parentId: ID | null;
+    foldersCount?: number;
+    filesCount?: number;
+    parent?: DriveFolder | null;
+};
 
 // @public (undocumented)
 export type Endpoints = {
@@ -2446,7 +2454,7 @@ type GetAvatarDecorationsResponse = {
     description: string;
     url: string;
     roleIdsThatCanBeUsedThisDecoration: string[];
-};
+}[];
 
 // @public (undocumented)
 type ID = string;
@@ -2559,7 +2567,6 @@ type MeDetailed = UserDetailed & {
     hideOnlineStatus: boolean;
     injectFeaturedNote: boolean;
     integrations: TODO_2;
-    isDeleted: boolean;
     isExplorable: boolean;
     mutedWords: string[][];
     mutingNotificationTypes: string[];
@@ -2949,6 +2956,7 @@ type UserDetailed = UserLite & {
     birthday: string | null;
     createdAt: DateString;
     description: string | null;
+    deletedAt: DateString | null;
     ffVisibility: 'public' | 'followers' | 'private';
     fields: {
         name: string;
@@ -2970,6 +2978,7 @@ type UserDetailed = UserLite & {
     isMuted: boolean;
     isSilenced: boolean;
     isSuspended: boolean;
+    isDeleted: boolean;
     lang: string | null;
     lastFetchedAt?: DateString;
     location: string | null;
@@ -3045,7 +3054,7 @@ type UserSorting = '+follower' | '-follower' | '+createdAt' | '-createdAt' | '+u
 // src/api.types.ts:411:100 - (ae-forgotten-export) The symbol "RegParams" needs to be exported by the entry point index.d.ts
 // src/api.types.ts:556:59 - (ae-forgotten-export) The symbol "PageComponent" needs to be exported by the entry point index.d.ts
 // src/api.types.ts:637:18 - (ae-forgotten-export) The symbol "ShowUserReq" needs to be exported by the entry point index.d.ts
-// src/entities.ts:565:2 - (ae-forgotten-export) The symbol "ModerationLogPayloads" needs to be exported by the entry point index.d.ts
+// src/entities.ts:574:2 - (ae-forgotten-export) The symbol "ModerationLogPayloads" needs to be exported by the entry point index.d.ts
 // src/streaming.types.ts:34:4 - (ae-forgotten-export) The symbol "FIXME" needs to be exported by the entry point index.d.ts
 
 // (No @packageDocumentation comment for this package)

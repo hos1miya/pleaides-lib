@@ -39,6 +39,7 @@ export type UserDetailed = UserLite & {
     birthday: string | null;
     createdAt: DateString;
     description: string | null;
+    deletedAt: DateString | null;
     ffVisibility: 'public' | 'followers' | 'private';
     fields: {
         name: string;
@@ -60,6 +61,7 @@ export type UserDetailed = UserLite & {
     isMuted: boolean;
     isSilenced: boolean;
     isSuspended: boolean;
+    isDeleted: boolean;
     lang: string | null;
     lastFetchedAt?: DateString;
     location: string | null;
@@ -106,7 +108,6 @@ export type MeDetailed = UserDetailed & {
     hideOnlineStatus: boolean;
     injectFeaturedNote: boolean;
     integrations: TODO;
-    isDeleted: boolean;
     isExplorable: boolean;
     mutedWords: string[][];
     mutingNotificationTypes: string[];
@@ -130,7 +131,15 @@ export type DriveFile = {
     comment: string | null;
     properties: TODO;
 };
-export type DriveFolder = TODO;
+export type DriveFolder = {
+    id: ID;
+    createdAt: DateString;
+    name: string;
+    parentId: ID | null;
+    foldersCount?: number;
+    filesCount?: number;
+    parent?: DriveFolder | null;
+};
 export type GalleryPost = {
     id: ID;
     createdAt: DateString;
@@ -489,7 +498,7 @@ export type Signin = {
 };
 export type AvatarDecoration = {
     id: ID;
-    updatedAt: Date | null;
+    updatedAt: DateString | null;
     url: string;
     name: string;
     description: string;
@@ -503,7 +512,7 @@ export type GetAvatarDecorationsResponse = {
     description: string;
     url: string;
     roleIdsThatCanBeUsedThisDecoration: string[];
-};
+}[];
 export type UserSorting = '+follower' | '-follower' | '+createdAt' | '-createdAt' | '+updatedAt' | '-updatedAt';
 export type OriginType = 'combined' | 'local' | 'remote';
 export type ModerationLog = {

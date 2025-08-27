@@ -117,10 +117,10 @@ export type Channels = {
 		events: {
 			fileCreated: (payload: DriveFile) => void;
 			fileUpdated: (payload: DriveFile) => void;
-			fileDeleted: (payload: DriveFile) => void;
+			fileDeleted: (payload: string) => void;
 			folderCreated: (payload: DriveFolder) => void;
 			folderUpdated: (payload: DriveFolder) => void;
-			folderDeleted: (payload: DriveFolder) => void;
+			folderDeleted: (payload: string) => void;
 		};
 		receives: null;
 	};
