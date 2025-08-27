@@ -603,6 +603,7 @@ export type Endpoints = {
 
 	// users
 	'users': { req: { limit?: number; offset?: number; sort?: UserSorting; origin?: OriginType; }; res: User[]; };
+	'users/achievements': { req: TODO; res: TODO; };
 	'users/clips': { req: TODO; res: TODO; };
 	'users/followers': { req: { userId?: User['id']; username?: User['username']; host?: User['host'] | null; limit?: number; sinceId?: Following['id']; untilId?: Following['id']; }; res: FollowingFollowerPopulated[]; };
 	'users/following': { req: { userId?: User['id']; username?: User['username']; host?: User['host'] | null; limit?: number; sinceId?: Following['id']; untilId?: Following['id']; }; res: FollowingFolloweePopulated[]; };

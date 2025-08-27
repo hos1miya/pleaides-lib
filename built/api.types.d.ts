@@ -1839,6 +1839,10 @@ export type Endpoints = {
         };
         res: User[];
     };
+    'users/achievements': {
+        req: TODO;
+        res: TODO;
+    };
     'users/clips': {
         req: TODO;
         res: TODO;

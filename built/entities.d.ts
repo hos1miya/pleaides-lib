@@ -5,10 +5,9 @@ type TODO = Record<string, any>;
 export type User = UserLite | UserDetailed;
 export type UserLite = {
     id: ID;
+    name: string;
     username: string;
     host: string | null;
-    name: string;
-    onlineStatus: 'online' | 'active' | 'offline' | 'unknown';
     avatarUrl: string;
     avatarBlurhash: string;
     avatarDecorations: {
@@ -19,10 +18,8 @@ export type UserLite = {
         offsetX?: number;
         offsetY?: number;
     }[];
-    emojis: {
-        name: string;
-        url: string;
-    }[];
+    isBot: boolean;
+    isCat: boolean;
     instance?: {
         name: Instance['name'];
         softwareName: Instance['softwareName'];
@@ -31,52 +28,54 @@ export type UserLite = {
         faviconUrl: Instance['faviconUrl'];
         themeColor: Instance['themeColor'];
     };
+    emojis: {
+        name: string;
+        url: string;
+    }[];
+    onlineStatus: 'online' | 'active' | 'offline' | 'unknown';
 };
 export type UserDetailed = UserLite & {
-    bannerBlurhash: string | null;
-    bannerColor: string | null;
-    bannerUrl: string | null;
-    birthday: string | null;
+    url: string | null;
+    uri: string | null;
     createdAt: DateString;
+    updatedAt: DateString | null;
+    lastFetchedAt?: DateString;
+    bannerUrl: string | null;
+    bannerBlurhash: string | null;
+    isLocked: boolean;
+    isSilenced: boolean;
+    isSuspended: boolean;
     description: string | null;
-    deletedAt: DateString | null;
-    ffVisibility: 'public' | 'followers' | 'private';
+    location: string | null;
+    birthday: string | null;
+    lang: string | null;
     fields: {
         name: string;
         value: string;
     }[];
     followersCount: number;
     followingCount: number;
-    hasPendingFollowRequestFromYou: boolean;
-    hasPendingFollowRequestToYou: boolean;
-    isAdmin: boolean;
-    isBlocked: boolean;
-    isBlocking: boolean;
-    isBot: boolean;
-    isCat: boolean;
-    isFollowed: boolean;
-    isFollowing: boolean;
-    isLocked: boolean;
-    isModerator: boolean;
-    isMuted: boolean;
-    isSilenced: boolean;
-    isSuspended: boolean;
-    isDeleted: boolean;
-    lang: string | null;
-    lastFetchedAt?: DateString;
-    location: string | null;
     notesCount: number;
     pinnedNoteIds: ID[];
     pinnedNotes: Note[];
-    pinnedPage: Page | null;
     pinnedPageId: string | null;
-    privateActivities: boolean;
+    pinnedPage: Page | null;
     publicReactions: boolean;
-    securityKeys: boolean;
+    privateActivities: boolean;
+    ffVisibility: 'public' | 'followers' | 'private';
     twoFactorEnabled: boolean;
-    updatedAt: DateString | null;
-    uri: string | null;
-    url: string | null;
+    usePasswordLessLogin: boolean;
+    securityKeys: boolean;
+    roles: Role[];
+    isFollowing: boolean;
+    isFollowed: boolean;
+    hasPendingFollowRequestFromYou: boolean;
+    hasPendingFollowRequestToYou: boolean;
+    isBlocking: boolean;
+    isBlocked: boolean;
+    isMuted: boolean;
+    isRenoteMuted: boolean;
+    isMediaMuted: boolean;
 };
 export type UserGroup = {
     id: ID;
@@ -113,7 +112,10 @@ export type MeDetailed = UserDetailed & {
     mutingNotificationTypes: string[];
     noCrawle: boolean;
     receiveAnnouncementEmail: boolean;
-    usePasswordLessLogin: boolean;
+    isAdmin: boolean;
+    isModerator: boolean;
+    isDeleted: boolean;
+    deletedAt: DateString | null;
     [other: string]: any;
 };
 export type DriveFile = {
@@ -475,6 +477,7 @@ export type Instance = {
     latestStatus: number | null;
     latestRequestReceivedAt: DateString | null;
     lastCommunicatedAt: DateString;
+    isBlocked: boolean;
     isNotResponding: boolean;
     isSuspended: boolean;
     softwareName: string | null;
@@ -513,6 +516,15 @@ export type GetAvatarDecorationsResponse = {
     url: string;
     roleIdsThatCanBeUsedThisDecoration: string[];
 }[];
+export type Role = {
+    id: ID;
+    name: string;
+    color: string;
+    iconUrl: string;
+    description: string;
+    isModerator: boolean;
+    isAdministrator: boolean;
+};
 export type UserSorting = '+follower' | '-follower' | '+createdAt' | '-createdAt' | '+updatedAt' | '-updatedAt';
 export type OriginType = 'combined' | 'local' | 'remote';
 export type ModerationLog = {
