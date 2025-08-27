@@ -4,6 +4,7 @@ import type {
 	MeDetailed,
 	Note, NoteFavorite, OriginType, Page, ServerInfo, Stats, User, UserDetailed, UserGroup, UserList, UserSorting, Notification, NoteReaction, Signin, MessagingMessage,
 	AvatarDecoration,
+	GetAvatarDecorationsResponse,
 } from './entities';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -356,6 +357,9 @@ export type Endpoints = {
 	'games/reversi/match': { req: TODO; res: TODO; };
 	'games/reversi/match/cancel': { req: TODO; res: TODO; };
 
+	// get-avatar-decorations
+	'get-avatar-decorations': { req: TODO; res: GetAvatarDecorationsResponse[]; };
+
 	// get-online-users-count
 	'get-online-users-count': { req: NoParams; res: { count: number; }; };
 
@@ -444,6 +448,7 @@ export type Endpoints = {
 		mutedWords?: string[][];
 		mutingNotificationTypes?: Notification['type'][];
 		emailNotificationTypes?: string[];
+		avatarDecorations?: TODO[];
 	}; res: MeDetailed; };
 	'i/user-group-invites': { req: TODO; res: TODO; };
 	'i/2fa/done': { req: TODO; res: TODO; };
@@ -612,7 +617,7 @@ export type Endpoints = {
 	'users/groups/leave': { req: TODO; res: TODO; };
 	'users/groups/owned': { req: TODO; res: TODO; };
 	'users/groups/pull': { req: TODO; res: TODO; };
-	'users/groups/show': { req: TODO; res: TODO; };
+	'users/groups/show': { req: TODO; res: UserGroup; };
 	'users/groups/transfer': { req: TODO; res: TODO; };
 	'users/groups/update': { req: TODO; res: TODO; };
 	'users/lists/create': { req: { name: string; }; res: UserList; };

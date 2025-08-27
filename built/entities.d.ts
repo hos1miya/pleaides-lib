@@ -185,6 +185,7 @@ export type Note = {
     isHidden?: boolean;
     via?: string | null;
     isDeleted: boolean;
+    deletedAt?: string;
 };
 export type NoteReaction = {
     id: ID;
@@ -495,6 +496,13 @@ export type AvatarDecoration = {
     roleIdsThatCanBeUsedThisDecoration: string[];
     remoteId: string;
     host: string | null;
+};
+export type GetAvatarDecorationsResponse = {
+    id: ID;
+    name: string;
+    description: string;
+    url: string;
+    roleIdsThatCanBeUsedThisDecoration: string[];
 };
 export type UserSorting = '+follower' | '-follower' | '+createdAt' | '-createdAt' | '+updatedAt' | '-updatedAt';
 export type OriginType = 'combined' | 'local' | 'remote';

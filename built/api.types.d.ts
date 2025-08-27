@@ -1,4 +1,4 @@
-import type { Ad, Announcement, Antenna, App, AuthSession, Blocking, Clip, DateString, DetailedInstanceMetadata, DriveFile, DriveFolder, Following, FollowingFolloweePopulated, FollowingFollowerPopulated, FollowRequest, GalleryPost, Instance, LiteInstanceMetadata, MeDetailed, Note, NoteFavorite, OriginType, Page, ServerInfo, Stats, User, UserDetailed, UserGroup, UserList, UserSorting, Notification, NoteReaction, Signin, MessagingMessage, AvatarDecoration } from './entities';
+import type { Ad, Announcement, Antenna, App, AuthSession, Blocking, Clip, DateString, DetailedInstanceMetadata, DriveFile, DriveFolder, Following, FollowingFolloweePopulated, FollowingFollowerPopulated, FollowRequest, GalleryPost, Instance, LiteInstanceMetadata, MeDetailed, Note, NoteFavorite, OriginType, Page, ServerInfo, Stats, User, UserDetailed, UserGroup, UserList, UserSorting, Notification, NoteReaction, Signin, MessagingMessage, AvatarDecoration, GetAvatarDecorationsResponse } from './entities';
 type TODO = Record<string, any> | null;
 type RegParams = any;
 type PageComponent = any;
@@ -1051,6 +1051,10 @@ export type Endpoints = {
         req: TODO;
         res: TODO;
     };
+    'get-avatar-decorations': {
+        req: TODO;
+        res: GetAvatarDecorationsResponse[];
+    };
     'get-online-users-count': {
         req: NoParams;
         res: {
@@ -1317,6 +1321,7 @@ export type Endpoints = {
             mutedWords?: string[][];
             mutingNotificationTypes?: Notification['type'][];
             emailNotificationTypes?: string[];
+            avatarDecorations?: TODO[];
         };
         res: MeDetailed;
     };
@@ -1908,7 +1913,7 @@ export type Endpoints = {
     };
     'users/groups/show': {
         req: TODO;
-        res: TODO;
+        res: UserGroup;
     };
     'users/groups/transfer': {
         req: TODO;

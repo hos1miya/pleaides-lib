@@ -257,6 +257,18 @@ export type Channels = {
             };
         };
     };
+    drive: {
+        params: null;
+        events: {
+            fileCreated: (payload: DriveFile) => void;
+            fileUpdated: (payload: DriveFile) => void;
+            fileDeleted: (payload: DriveFile) => void;
+            folderCreated: (payload: DriveFolder) => void;
+            folderUpdated: (payload: DriveFolder) => void;
+            folderDeleted: (payload: DriveFolder) => void;
+        };
+        receives: null;
+    };
 };
 
 // @public (undocumented)
@@ -1347,6 +1359,10 @@ export type Endpoints = {
         req: TODO;
         res: TODO;
     };
+    'get-avatar-decorations': {
+        req: TODO;
+        res: GetAvatarDecorationsResponse[];
+    };
     'get-online-users-count': {
         req: NoParams;
         res: {
@@ -1613,6 +1629,7 @@ export type Endpoints = {
             mutedWords?: string[][];
             mutingNotificationTypes?: Notification_2['type'][];
             emailNotificationTypes?: string[];
+            avatarDecorations?: TODO[];
         };
         res: MeDetailed;
     };
@@ -2204,7 +2221,7 @@ export type Endpoints = {
     };
     'users/groups/show': {
         req: TODO;
-        res: TODO;
+        res: UserGroup;
     };
     'users/groups/transfer': {
         req: TODO;
@@ -2356,6 +2373,7 @@ declare namespace entities {
         Instance,
         Signin,
         AvatarDecoration,
+        GetAvatarDecorationsResponse,
         UserSorting,
         OriginType,
         ModerationLog
@@ -2419,6 +2437,15 @@ type GalleryPost = {
     isSensitive: boolean;
     likedCount: number;
     isLiked?: boolean;
+};
+
+// @public (undocumented)
+type GetAvatarDecorationsResponse = {
+    id: ID;
+    name: string;
+    description: string;
+    url: string;
+    roleIdsThatCanBeUsedThisDecoration: string[];
 };
 
 // @public (undocumented)
@@ -2716,6 +2743,7 @@ type Note = {
     isHidden?: boolean;
     via?: string | null;
     isDeleted: boolean;
+    deletedAt?: string;
 };
 
 // @public (undocumented)
@@ -3012,12 +3040,12 @@ type UserSorting = '+follower' | '-follower' | '+createdAt' | '-createdAt' | '+u
 
 // Warnings were encountered during analysis:
 //
-// src/api.types.ts:24:32 - (ae-forgotten-export) The symbol "TODO" needs to be exported by the entry point index.d.ts
-// src/api.types.ts:26:25 - (ae-forgotten-export) The symbol "NoParams" needs to be exported by the entry point index.d.ts
-// src/api.types.ts:407:100 - (ae-forgotten-export) The symbol "RegParams" needs to be exported by the entry point index.d.ts
-// src/api.types.ts:551:59 - (ae-forgotten-export) The symbol "PageComponent" needs to be exported by the entry point index.d.ts
-// src/api.types.ts:632:18 - (ae-forgotten-export) The symbol "ShowUserReq" needs to be exported by the entry point index.d.ts
-// src/entities.ts:556:2 - (ae-forgotten-export) The symbol "ModerationLogPayloads" needs to be exported by the entry point index.d.ts
+// src/api.types.ts:25:32 - (ae-forgotten-export) The symbol "TODO" needs to be exported by the entry point index.d.ts
+// src/api.types.ts:27:25 - (ae-forgotten-export) The symbol "NoParams" needs to be exported by the entry point index.d.ts
+// src/api.types.ts:411:100 - (ae-forgotten-export) The symbol "RegParams" needs to be exported by the entry point index.d.ts
+// src/api.types.ts:556:59 - (ae-forgotten-export) The symbol "PageComponent" needs to be exported by the entry point index.d.ts
+// src/api.types.ts:637:18 - (ae-forgotten-export) The symbol "ShowUserReq" needs to be exported by the entry point index.d.ts
+// src/entities.ts:565:2 - (ae-forgotten-export) The symbol "ModerationLogPayloads" needs to be exported by the entry point index.d.ts
 // src/streaming.types.ts:34:4 - (ae-forgotten-export) The symbol "FIXME" needs to be exported by the entry point index.d.ts
 
 // (No @packageDocumentation comment for this package)

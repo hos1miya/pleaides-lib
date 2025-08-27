@@ -1,4 +1,4 @@
-import type { Antenna, CustomEmoji, DriveFile, MeDetailed, MessagingMessage, Note, Notification, PageEvent, User, UserGroup } from './entities';
+import type { Antenna, CustomEmoji, DriveFile, DriveFolder, MeDetailed, MessagingMessage, Note, Notification, PageEvent, User, UserGroup } from './entities';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 type FIXME = any;
@@ -111,6 +111,18 @@ export type Channels = {
 				length: number;
 			};
 		};
+	};
+	drive: {
+		params: null;
+		events: {
+			fileCreated: (payload: DriveFile) => void;
+			fileUpdated: (payload: DriveFile) => void;
+			fileDeleted: (payload: DriveFile) => void;
+			folderCreated: (payload: DriveFolder) => void;
+			folderUpdated: (payload: DriveFolder) => void;
+			folderDeleted: (payload: DriveFolder) => void;
+		};
+		receives: null;
 	};
 };
 

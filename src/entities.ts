@@ -197,6 +197,7 @@ export type Note = {
 	isHidden?: boolean;
 	via?: string | null;
 	isDeleted: boolean;
+	deletedAt?: string;
 };
 
 export type NoteReaction = {
@@ -535,6 +536,14 @@ export type AvatarDecoration = {
 	roleIdsThatCanBeUsedThisDecoration: string[];
 	remoteId: string;
 	host: string | null;
+};
+
+export type GetAvatarDecorationsResponse = {
+  id: ID; // format: id
+  name: string;
+  description: string;
+  url: string;
+  roleIdsThatCanBeUsedThisDecoration: string[]; // id[]
 };
 
 export type UserSorting =
