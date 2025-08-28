@@ -5,6 +5,7 @@ import type {
 	Note, NoteFavorite, OriginType, Page, ServerInfo, Stats, User, UserDetailed, UserGroup, UserList, UserSorting, Notification, NoteReaction, Signin, MessagingMessage,
 	AvatarDecoration,
 	GetAvatarDecorationsResponse,
+	Role,
 } from './entities';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -18,7 +19,7 @@ type PageComponent = any;
 
 type NoParams = Record<string, never>;
 
-type ShowUserReq = { username: string; host?: string; } | { userId: User['id']; };
+type ShowUserReq = { username: string; host?: string | null; } | { userId: User['id']; };
 
 export type Endpoints = {
 	// admin
@@ -29,7 +30,7 @@ export type Endpoints = {
 	'admin/get-table-stats': { req: TODO; res: TODO; };
 	'admin/invite': { req: TODO; res: TODO; };
 	'admin/logs': { req: TODO; res: TODO; };
-	'admin/reset-password': { req: TODO; res: TODO; };
+	'admin/reset-password': { req: { userId: User['id']; }; res: { password: string; }; };
 	'admin/resolve-abuse-user-report': { req: TODO; res: TODO; };
 	'admin/resync-chart': { req: TODO; res: TODO; };
 	'admin/send-email': { req: TODO; res: TODO; };
@@ -59,7 +60,7 @@ export type Endpoints = {
 	'admin/delete-account': { req: TODO; res: TODO; };
 	'admin/drive/clean-remote-files': { req: TODO; res: TODO; };
 	'admin/drive/cleanup': { req: TODO; res: TODO; };
-	'admin/drive/files': { req: TODO; res: TODO; };
+	'admin/drive/files': { req: TODO; res: DriveFile[]; };
 	'admin/drive/show-file': { req: TODO; res: TODO; };
 	'admin/emoji/add': { req: TODO; res: TODO; };
 	'admin/emoji/add-aliases-bulk': { req: { ids: string[]; aliases: string[]; }; res: null; };
@@ -77,6 +78,8 @@ export type Endpoints = {
 	'admin/federation/refresh-remote-instance-metadata': { req: TODO; res: TODO; };
 	'admin/federation/remove-all-following': { req: TODO; res: TODO; };
 	'admin/federation/update-instance': { req: TODO; res: TODO; };
+	'admin/get-user-ips': { req: { userId: User['id']; }; res: TODO; };
+	'admin/admin/update-user-note': { req: { userId: User['id']; text: string; }; res: TODO; };
 	'admin/meta': { req: TODO; res: TODO; };
 	'admin/moderators/add': { req: TODO; res: TODO; };
 	'admin/moderators/remove': { req: TODO; res: TODO; };
@@ -90,9 +93,9 @@ export type Endpoints = {
 	'admin/relays/add': { req: TODO; res: TODO; };
 	'admin/relays/list': { req: TODO; res: TODO; };
 	'admin/relays/remove': { req: TODO; res: TODO; };
-	'admin/roles/list': { req: TODO; res: TODO; };
-	'admin/roles/assign': { req: TODO; res: TODO; };
-	'admin/roles/unassign': { req: TODO; res: TODO; };
+	'admin/roles/list': { req: null; res: Role[]; };
+	'admin/roles/assign': { req: { roleId: Role['id']; userId: User['id']; }; res: null; };
+	'admin/roles/unassign': { req: { roleId: Role['id']; userId: User['id']; }; res: null; };
 
 	// announcements
 	'announcements': { req: { limit?: number; withUnreads?: boolean; sinceId?: Announcement['id']; untilId?: Announcement['id']; }; res: Announcement[]; };
@@ -121,6 +124,7 @@ export type Endpoints = {
 
 	// auth
 	'auth/accept': { req: { token: string; }; res: null; };
+	'auth/deny': { req: { token: string; }; res: null; };
 	'auth/session/generate': { req: { appSecret: string; }; res: { token: string; url: string; }; };
 	'auth/session/show': { req: { token: string; }; res: AuthSession; };
 	'auth/session/userkey': { req: { appSecret: string; token: string; }; res: { accessToken: string; user: User }; };
@@ -247,11 +251,13 @@ export type Endpoints = {
 		inc: number[];
 		total: number[];
 		diffs: {
+			withFile: number[];
 			normal: number[];
 			renote: number[];
 			reply: number[];
 		};
 	}; };
+	'charts/user/pv': { req: { span: 'day' | 'hour'; limit?: number; offset?: number | null; userId: User['id']; }; res: TODO; };
 	'charts/user/reactions': { req: { span: 'day' | 'hour'; limit?: number; offset?: number | null; userId: User['id']; }; res: TODO; };
 	'charts/users': { req: { span: 'day' | 'hour'; limit?: number; offset?: number | null; }; res: {
 		local: {
@@ -273,7 +279,7 @@ export type Endpoints = {
 	'clips/delete': { req: { clipId: Clip['id']; }; res: null; };
 	'clips/list': { req: TODO; res: TODO; };
 	'clips/notes': { req: TODO; res: TODO; };
-	'clips/show': { req: TODO; res: TODO; };
+	'clips/show': { req: { clipId: Clip['id']; }; res: Clip; };
 	'clips/update': { req: TODO; res: TODO; };
 
 	// drive
@@ -324,7 +330,7 @@ export type Endpoints = {
 		publishing?: boolean | null;
 		limit?: number;
 		offset?: number;
-		sort?: '+pubSub' | '-pubSub' | '+notes' | '-notes' | '+users' | '-users' | '+following' | '-following' | '+followers' | '-followers' | '+caughtAt' | '-caughtAt' | '+lastCommunicatedAt' | '-lastCommunicatedAt' | '+driveUsage' | '-driveUsage' | '+driveFiles' | '-driveFiles';
+		sort?: '+pubSub' | '-pubSub' | '+notes' | '-notes' | '+users' | '-users' | '+following' | '-following' | '+followers' | '-followers' | '+caughtAt' | '-caughtAt' | '+lastCommunicatedAt' | '-lastCommunicatedAt' | '+driveUsage' | '-driveUsage' | '+driveFiles' | '-driveFiles' | '+latestRequestReceivedAt';
 	}; res: Instance[]; };
 	'federation/show-instance': { req: { host: string; }; res: Instance; };
 	'federation/update-remote-user': { req: { userId: User['id']; }; res: null; };
@@ -614,9 +620,9 @@ export type Endpoints = {
 	'users/groups/invitations/accept': { req: TODO; res: TODO; };
 	'users/groups/invitations/reject': { req: TODO; res: TODO; };
 	'users/groups/invite': { req: TODO; res: TODO; };
-	'users/groups/joined': { req: TODO; res: TODO; };
+	'users/groups/joined': { req: TODO; res: UserGroup[]; };
 	'users/groups/leave': { req: TODO; res: TODO; };
-	'users/groups/owned': { req: TODO; res: TODO; };
+	'users/groups/owned': { req: TODO; res: UserGroup[]; };
 	'users/groups/pull': { req: TODO; res: TODO; };
 	'users/groups/show': { req: TODO; res: UserGroup; };
 	'users/groups/transfer': { req: TODO; res: TODO; };
@@ -629,13 +635,14 @@ export type Endpoints = {
 	'users/lists/show': { req: { listId: UserList['id']; }; res: UserList; };
 	'users/lists/update': { req: { listId: UserList['id']; name: string; }; res: UserList; };
 	'users/notes': { req: { userId: User['id']; limit?: number; sinceId?: Note['id']; untilId?: Note['id']; sinceDate?: number; untilDate?: number; }; res: Note[]; };
-	'users/pages': { req: TODO; res: TODO; };
+	'users/pages': { req: TODO; res: Page[]; };
+	'users/reactions': { req: { userId: User['id']; }; res: TODO; };
 	'users/recommendation': { req: TODO; res: TODO; };
 	'users/relation': { req: TODO; res: TODO; };
 	'users/report-abuse': { req: TODO; res: TODO; };
-	'users/search-by-username-and-host': { req: TODO; res: TODO; };
+	'users/search-by-username-and-host': { req: TODO; res: UserDetailed[]; };
 	'users/search': { req: TODO; res: TODO; };
-	'users/show': { req: ShowUserReq | { userIds: User['id'][]; }; res: {
+	'users/show': { req: ShowUserReq | { userIds: User['id'][]; } | { userId: User['id']; }; res: {
 		$switch: {
 			$cases: [[
 				{ userIds: User['id'][]; },

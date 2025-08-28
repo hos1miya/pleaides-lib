@@ -88,6 +88,14 @@ export type Channels = {
             };
         };
     };
+    messagingIndex: {
+        params: null;
+        events: {
+            message: (payload: MessagingMessage) => void;
+            read: (payload: MessagingMessage['id'][]) => void;
+        };
+        receives: null;
+    };
     serverStats: {
         params: null;
         events: {

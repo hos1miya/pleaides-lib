@@ -33,6 +33,10 @@ export type UserLite = {
         url: string;
     }[];
     onlineStatus: 'online' | 'active' | 'offline' | 'unknown';
+    badgeRoles: {
+        name: string;
+        iconUrl: string;
+    }[];
 };
 export type UserDetailed = UserLite & {
     url: string | null;
@@ -208,6 +212,7 @@ export type Notification = {
     id: ID;
     createdAt: DateString;
     isRead: boolean;
+    user: User;
 } & ({
     type: 'reaction';
     reaction: string;
@@ -240,6 +245,11 @@ export type Notification = {
     userId: User['id'];
     note: Note;
 } | {
+    type: 'pollEnded';
+    user: User;
+    userId: User['id'];
+    note: Note;
+} | {
     type: 'follow';
     user: User;
     userId: User['id'];
@@ -249,6 +259,10 @@ export type Notification = {
     userId: User['id'];
 } | {
     type: 'receiveFollowRequest';
+    user: User;
+    userId: User['id'];
+} | {
+    type: 'achievementEarned';
     user: User;
     userId: User['id'];
 } | {

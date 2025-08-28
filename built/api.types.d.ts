@@ -1,11 +1,11 @@
-import type { Ad, Announcement, Antenna, App, AuthSession, Blocking, Clip, DateString, DetailedInstanceMetadata, DriveFile, DriveFolder, Following, FollowingFolloweePopulated, FollowingFollowerPopulated, FollowRequest, GalleryPost, Instance, LiteInstanceMetadata, MeDetailed, Note, NoteFavorite, OriginType, Page, ServerInfo, Stats, User, UserDetailed, UserGroup, UserList, UserSorting, Notification, NoteReaction, Signin, MessagingMessage, AvatarDecoration, GetAvatarDecorationsResponse } from './entities';
+import type { Ad, Announcement, Antenna, App, AuthSession, Blocking, Clip, DateString, DetailedInstanceMetadata, DriveFile, DriveFolder, Following, FollowingFolloweePopulated, FollowingFollowerPopulated, FollowRequest, GalleryPost, Instance, LiteInstanceMetadata, MeDetailed, Note, NoteFavorite, OriginType, Page, ServerInfo, Stats, User, UserDetailed, UserGroup, UserList, UserSorting, Notification, NoteReaction, Signin, MessagingMessage, AvatarDecoration, GetAvatarDecorationsResponse, Role } from './entities';
 type TODO = Record<string, any> | null;
 type RegParams = any;
 type PageComponent = any;
 type NoParams = Record<string, never>;
 type ShowUserReq = {
     username: string;
-    host?: string;
+    host?: string | null;
 } | {
     userId: User['id'];
 };
@@ -41,8 +41,12 @@ export type Endpoints = {
         res: TODO;
     };
     'admin/reset-password': {
-        req: TODO;
-        res: TODO;
+        req: {
+            userId: User['id'];
+        };
+        res: {
+            password: string;
+        };
     };
     'admin/resolve-abuse-user-report': {
         req: TODO;
@@ -179,7 +183,7 @@ export type Endpoints = {
     };
     'admin/drive/files': {
         req: TODO;
-        res: TODO;
+        res: DriveFile[];
     };
     'admin/drive/show-file': {
         req: TODO;
@@ -267,6 +271,19 @@ export type Endpoints = {
         req: TODO;
         res: TODO;
     };
+    'admin/get-user-ips': {
+        req: {
+            userId: User['id'];
+        };
+        res: TODO;
+    };
+    'admin/admin/update-user-note': {
+        req: {
+            userId: User['id'];
+            text: string;
+        };
+        res: TODO;
+    };
     'admin/meta': {
         req: TODO;
         res: TODO;
@@ -322,16 +339,22 @@ export type Endpoints = {
         res: TODO;
     };
     'admin/roles/list': {
-        req: TODO;
-        res: TODO;
+        req: null;
+        res: Role[];
     };
     'admin/roles/assign': {
-        req: TODO;
-        res: TODO;
+        req: {
+            roleId: Role['id'];
+            userId: User['id'];
+        };
+        res: null;
     };
     'admin/roles/unassign': {
-        req: TODO;
-        res: TODO;
+        req: {
+            roleId: Role['id'];
+            userId: User['id'];
+        };
+        res: null;
     };
     'announcements': {
         req: {
@@ -404,6 +427,12 @@ export type Endpoints = {
         res: App;
     };
     'auth/accept': {
+        req: {
+            token: string;
+        };
+        res: null;
+    };
+    'auth/deny': {
         req: {
             token: string;
         };
@@ -650,11 +679,21 @@ export type Endpoints = {
             inc: number[];
             total: number[];
             diffs: {
+                withFile: number[];
                 normal: number[];
                 renote: number[];
                 reply: number[];
             };
         };
+    };
+    'charts/user/pv': {
+        req: {
+            span: 'day' | 'hour';
+            limit?: number;
+            offset?: number | null;
+            userId: User['id'];
+        };
+        res: TODO;
     };
     'charts/user/reactions': {
         req: {
@@ -717,8 +756,10 @@ export type Endpoints = {
         res: TODO;
     };
     'clips/show': {
-        req: TODO;
-        res: TODO;
+        req: {
+            clipId: Clip['id'];
+        };
+        res: Clip;
     };
     'clips/update': {
         req: TODO;
@@ -909,7 +950,7 @@ export type Endpoints = {
             publishing?: boolean | null;
             limit?: number;
             offset?: number;
-            sort?: '+pubSub' | '-pubSub' | '+notes' | '-notes' | '+users' | '-users' | '+following' | '-following' | '+followers' | '-followers' | '+caughtAt' | '-caughtAt' | '+lastCommunicatedAt' | '-lastCommunicatedAt' | '+driveUsage' | '-driveUsage' | '+driveFiles' | '-driveFiles';
+            sort?: '+pubSub' | '-pubSub' | '+notes' | '-notes' | '+users' | '-users' | '+following' | '-following' | '+followers' | '-followers' | '+caughtAt' | '-caughtAt' | '+lastCommunicatedAt' | '-lastCommunicatedAt' | '+driveUsage' | '-driveUsage' | '+driveFiles' | '-driveFiles' | '+latestRequestReceivedAt';
         };
         res: Instance[];
     };
@@ -1901,7 +1942,7 @@ export type Endpoints = {
     };
     'users/groups/joined': {
         req: TODO;
-        res: TODO;
+        res: UserGroup[];
     };
     'users/groups/leave': {
         req: TODO;
@@ -1909,7 +1950,7 @@ export type Endpoints = {
     };
     'users/groups/owned': {
         req: TODO;
-        res: TODO;
+        res: UserGroup[];
     };
     'users/groups/pull': {
         req: TODO;
@@ -1983,6 +2024,12 @@ export type Endpoints = {
     };
     'users/pages': {
         req: TODO;
+        res: Page[];
+    };
+    'users/reactions': {
+        req: {
+            userId: User['id'];
+        };
         res: TODO;
     };
     'users/recommendation': {
@@ -1999,7 +2046,7 @@ export type Endpoints = {
     };
     'users/search-by-username-and-host': {
         req: TODO;
-        res: TODO;
+        res: UserDetailed[];
     };
     'users/search': {
         req: TODO;
@@ -2008,6 +2055,8 @@ export type Endpoints = {
     'users/show': {
         req: ShowUserReq | {
             userIds: User['id'][];
+        } | {
+            userId: User['id'];
         };
         res: {
             $switch: {
