@@ -277,7 +277,7 @@ export type Endpoints = {
         };
         res: TODO;
     };
-    'admin/admin/update-user-note': {
+    'admin/update-user-note': {
         req: {
             userId: User['id'];
             text: string;
@@ -1882,7 +1882,10 @@ export type Endpoints = {
     };
     'users/achievements': {
         req: TODO;
-        res: TODO;
+        res: {
+            name: string;
+            unlockedAt: DateString;
+        }[];
     };
     'users/clips': {
         req: TODO;

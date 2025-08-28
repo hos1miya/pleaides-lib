@@ -36,6 +36,7 @@ export type UserLite = {
     badgeRoles: {
         name: string;
         iconUrl: string;
+        id: ID;
     }[];
 };
 export type UserDetailed = UserLite & {
@@ -165,7 +166,7 @@ export type Note = {
     createdAt: DateString;
     text: string | null;
     cw: string | null;
-    user: User;
+    user: UserLite;
     userId: User['id'];
     reply?: Note;
     replyId: Note['id'];
@@ -212,7 +213,7 @@ export type Notification = {
     id: ID;
     createdAt: DateString;
     isRead: boolean;
-    user: User;
+    user: UserDetailed;
 } & ({
     type: 'reaction';
     reaction: string;

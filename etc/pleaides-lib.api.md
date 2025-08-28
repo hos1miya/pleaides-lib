@@ -601,7 +601,7 @@ export type Endpoints = {
         };
         res: TODO;
     };
-    'admin/admin/update-user-note': {
+    'admin/update-user-note': {
         req: {
             userId: User['id'];
             text: string;
@@ -2206,7 +2206,10 @@ export type Endpoints = {
     };
     'users/achievements': {
         req: TODO;
-        res: TODO;
+        res: {
+            name: string;
+            unlockedAt: DateString;
+        }[];
     };
     'users/clips': {
         req: TODO;
@@ -2781,7 +2784,7 @@ type Note = {
     createdAt: DateString;
     text: string | null;
     cw: string | null;
-    user: User;
+    user: UserLite;
     userId: User['id'];
     reply?: Note;
     replyId: Note['id'];
@@ -2843,7 +2846,7 @@ type Notification_2 = {
     id: ID;
     createdAt: DateString;
     isRead: boolean;
-    user: User;
+    user: UserDetailed;
 } & ({
     type: 'reaction';
     reaction: string;
@@ -3131,6 +3134,7 @@ type UserLite = {
     badgeRoles: {
         name: string;
         iconUrl: string;
+        id: ID;
     }[];
 };
 
@@ -3144,7 +3148,7 @@ type UserSorting = '+follower' | '-follower' | '+createdAt' | '-createdAt' | '+u
 // src/api.types.ts:417:100 - (ae-forgotten-export) The symbol "RegParams" needs to be exported by the entry point index.d.ts
 // src/api.types.ts:562:59 - (ae-forgotten-export) The symbol "PageComponent" needs to be exported by the entry point index.d.ts
 // src/api.types.ts:645:18 - (ae-forgotten-export) The symbol "ShowUserReq" needs to be exported by the entry point index.d.ts
-// src/entities.ts:601:2 - (ae-forgotten-export) The symbol "ModerationLogPayloads" needs to be exported by the entry point index.d.ts
+// src/entities.ts:602:2 - (ae-forgotten-export) The symbol "ModerationLogPayloads" needs to be exported by the entry point index.d.ts
 // src/streaming.types.ts:34:4 - (ae-forgotten-export) The symbol "FIXME" needs to be exported by the entry point index.d.ts
 
 // (No @packageDocumentation comment for this package)

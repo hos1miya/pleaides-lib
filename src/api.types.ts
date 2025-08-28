@@ -79,7 +79,7 @@ export type Endpoints = {
 	'admin/federation/remove-all-following': { req: TODO; res: TODO; };
 	'admin/federation/update-instance': { req: TODO; res: TODO; };
 	'admin/get-user-ips': { req: { userId: User['id']; }; res: TODO; };
-	'admin/admin/update-user-note': { req: { userId: User['id']; text: string; }; res: TODO; };
+	'admin/update-user-note': { req: { userId: User['id']; text: string; }; res: TODO; };
 	'admin/meta': { req: TODO; res: TODO; };
 	'admin/moderators/add': { req: TODO; res: TODO; };
 	'admin/moderators/remove': { req: TODO; res: TODO; };
@@ -609,7 +609,7 @@ export type Endpoints = {
 
 	// users
 	'users': { req: { limit?: number; offset?: number; sort?: UserSorting; origin?: OriginType; }; res: User[]; };
-	'users/achievements': { req: TODO; res: TODO; };
+	'users/achievements': { req: TODO; res: { name: string; unlockedAt: DateString; }[]; };
 	'users/clips': { req: TODO; res: TODO; };
 	'users/followers': { req: { userId?: User['id']; username?: User['username']; host?: User['host'] | null; limit?: number; sinceId?: Following['id']; untilId?: Following['id']; }; res: FollowingFollowerPopulated[]; };
 	'users/following': { req: { userId?: User['id']; username?: User['username']; host?: User['host'] | null; limit?: number; sinceId?: Following['id']; untilId?: Following['id']; }; res: FollowingFolloweePopulated[]; };
