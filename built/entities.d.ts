@@ -368,6 +368,8 @@ export type LiteInstanceMetadata = {
     }[];
     translatorAvailable: boolean;
     mediaProxy: string;
+    enableAuthorizedFetch: boolean;
+    enableBotProtectionForAuthorizedFetch: boolean;
 };
 export type DetailedInstanceMetadata = LiteInstanceMetadata & {
     pinnedPages: string[];

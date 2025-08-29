@@ -72,9 +72,22 @@ export type Channels = {
 		receives: null;
 	};
 	antenna: {
-		params: null;
+		params: {
+			antennaId?: string;
+		};
 		events: {
 			note: (payload: Note) => void;
+		};
+		receives: null;
+	};
+	userList: {
+		params: {
+			listId?: string;
+		};
+		events: {
+			note: (payload: Note) => void;
+			userAdded: (payload: User) => void;
+			userRemoved: (payload: User) => void;
 		};
 		receives: null;
 	};
