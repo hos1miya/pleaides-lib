@@ -814,12 +814,15 @@ export type Endpoints = {
             offset?: number | null;
         };
         res: {
-            local: {
-                users: number[];
-            };
-            remote: {
-                users: number[];
-            };
+            readWrite: number[];
+            read: number[];
+            write: number[];
+            registeredWithinWeek: number[];
+            registeredWithinMonth: number[];
+            registeredWithinYear: number[];
+            registeredOutsideWeek: number[];
+            registeredOutsideMonth: number[];
+            registeredOutsideYear: number[];
         };
     };
     'charts/ap-request': {
@@ -866,11 +869,14 @@ export type Endpoints = {
             offset?: number | null;
         };
         res: {
-            instance: {
-                dec: number[];
-                inc: number[];
-                total: number[];
-            };
+            deliveredInstances: number[];
+            inboxInstances: number[];
+            stalled: number[];
+            sub: number[];
+            pub: number[];
+            pubsub: number[];
+            subActive: number[];
+            pubActive: number[];
         };
     };
     'charts/hashtag': {
@@ -952,6 +958,7 @@ export type Endpoints = {
                     normal: number[];
                     renote: number[];
                     reply: number[];
+                    withFile: number[];
                 };
             };
             remote: {
@@ -962,6 +969,7 @@ export type Endpoints = {
                     normal: number[];
                     renote: number[];
                     reply: number[];
+                    withFile: number[];
                 };
             };
         };
@@ -989,7 +997,32 @@ export type Endpoints = {
             offset?: number | null;
             userId: User['id'];
         };
-        res: TODO;
+        res: {
+            local: {
+                followings: {
+                    total: number[];
+                    inc: number[];
+                    dec: number[];
+                };
+                followers: {
+                    total: number[];
+                    inc: number[];
+                    dec: number[];
+                };
+            };
+            remote: {
+                followings: {
+                    total: number[];
+                    inc: number[];
+                    dec: number[];
+                };
+                followers: {
+                    total: number[];
+                    inc: number[];
+                    dec: number[];
+                };
+            };
+        };
     };
     'charts/user/notes': {
         req: {
@@ -1017,7 +1050,16 @@ export type Endpoints = {
             offset?: number | null;
             userId: User['id'];
         };
-        res: TODO;
+        res: {
+            upv: {
+                user: number[];
+                visitor: number[];
+            };
+            pv: {
+                user: number[];
+                visitor: number[];
+            };
+        };
     };
     'charts/user/reactions': {
         req: {
@@ -3145,9 +3187,9 @@ type UserSorting = '+follower' | '-follower' | '+createdAt' | '-createdAt' | '+u
 //
 // src/api.types.ts:26:32 - (ae-forgotten-export) The symbol "TODO" needs to be exported by the entry point index.d.ts
 // src/api.types.ts:28:25 - (ae-forgotten-export) The symbol "NoParams" needs to be exported by the entry point index.d.ts
-// src/api.types.ts:417:100 - (ae-forgotten-export) The symbol "RegParams" needs to be exported by the entry point index.d.ts
-// src/api.types.ts:562:59 - (ae-forgotten-export) The symbol "PageComponent" needs to be exported by the entry point index.d.ts
-// src/api.types.ts:645:18 - (ae-forgotten-export) The symbol "ShowUserReq" needs to be exported by the entry point index.d.ts
+// src/api.types.ts:459:100 - (ae-forgotten-export) The symbol "RegParams" needs to be exported by the entry point index.d.ts
+// src/api.types.ts:604:59 - (ae-forgotten-export) The symbol "PageComponent" needs to be exported by the entry point index.d.ts
+// src/api.types.ts:687:18 - (ae-forgotten-export) The symbol "ShowUserReq" needs to be exported by the entry point index.d.ts
 // src/entities.ts:602:2 - (ae-forgotten-export) The symbol "ModerationLogPayloads" needs to be exported by the entry point index.d.ts
 // src/streaming.types.ts:34:4 - (ae-forgotten-export) The symbol "FIXME" needs to be exported by the entry point index.d.ts
 

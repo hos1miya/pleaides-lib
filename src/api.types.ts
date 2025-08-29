@@ -136,12 +136,15 @@ export type Endpoints = {
 
 	// charts
 	'charts/active-users': { req: { span: 'day' | 'hour'; limit?: number; offset?: number | null; }; res: {
-		local: {
-			users: number[];
-		};
-		remote: {
-			users: number[];
-		};
+		readWrite: number[];
+		read: number[];
+		write: number[];
+		registeredWithinWeek: number[];
+		registeredWithinMonth: number[];
+		registeredWithinYear: number[];
+		registeredOutsideWeek: number[];
+		registeredOutsideMonth: number[];
+		registeredOutsideYear: number[];
 	}; };
 	'charts/ap-request': { req: { span: 'day' | 'hour'; limit?: number; offset?: number | null; }; res: {
 		deliverFailed: number[];
@@ -167,11 +170,14 @@ export type Endpoints = {
 		};
 	}; };
 	'charts/federation': { req: { span: 'day' | 'hour'; limit?: number; offset?: number | null; }; res: {
-		instance: {
-			dec: number[];
-			inc: number[];
-			total: number[];
-		};
+		deliveredInstances: number[];
+		inboxInstances: number[];
+		stalled: number[];
+		sub: number[];
+		pub: number[];
+		pubsub: number[];
+		subActive: number[];
+		pubActive: number[];
 	}; };
 	'charts/hashtag': { req: { span: 'day' | 'hour'; limit?: number; offset?: number | null; }; res: TODO; };
 	'charts/instance': { req: { span: 'day' | 'hour'; limit?: number; offset?: number | null; host: string; }; res: {
@@ -224,6 +230,7 @@ export type Endpoints = {
 				normal: number[];
 				renote: number[];
 				reply: number[];
+				withFile: number[];
 			};
 		};
 		remote: {
@@ -234,6 +241,7 @@ export type Endpoints = {
 				normal: number[];
 				renote: number[];
 				reply: number[];
+				withFile: number[];
 			};
 		};
 	}; };
@@ -245,7 +253,32 @@ export type Endpoints = {
 		totalCount: number[];
 		totalSize: number[];
 	}; };
-	'charts/user/following': { req: { span: 'day' | 'hour'; limit?: number; offset?: number | null; userId: User['id']; }; res: TODO; };
+	'charts/user/following': { req: { span: 'day' | 'hour'; limit?: number; offset?: number | null; userId: User['id']; }; res: {
+		local: {
+			followings: {
+				total: number[];
+				inc: number[];
+				dec: number[];
+			};
+			followers: {
+				total: number[];
+				inc: number[];
+				dec: number[];
+			};
+		};
+		remote: {
+			followings: {
+				total: number[];
+				inc: number[];
+				dec: number[];
+			};
+			followers: {
+				total: number[];
+				inc: number[];
+				dec: number[];
+			};
+		};
+	}; };
 	'charts/user/notes': { req: { span: 'day' | 'hour'; limit?: number; offset?: number | null; userId: User['id']; }; res: {
 		dec: number[];
 		inc: number[];
@@ -257,7 +290,16 @@ export type Endpoints = {
 			reply: number[];
 		};
 	}; };
-	'charts/user/pv': { req: { span: 'day' | 'hour'; limit?: number; offset?: number | null; userId: User['id']; }; res: TODO; };
+	'charts/user/pv': { req: { span: 'day' | 'hour'; limit?: number; offset?: number | null; userId: User['id']; }; res: {
+		upv: {
+			user: number[];
+			visitor: number[];
+		};
+		pv: {
+			user: number[];
+			visitor: number[];
+		};
+	}; };
 	'charts/user/reactions': { req: { span: 'day' | 'hour'; limit?: number; offset?: number | null; userId: User['id']; }; res: TODO; };
 	'charts/users': { req: { span: 'day' | 'hour'; limit?: number; offset?: number | null; }; res: {
 		local: {

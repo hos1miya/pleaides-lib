@@ -490,12 +490,15 @@ export type Endpoints = {
             offset?: number | null;
         };
         res: {
-            local: {
-                users: number[];
-            };
-            remote: {
-                users: number[];
-            };
+            readWrite: number[];
+            read: number[];
+            write: number[];
+            registeredWithinWeek: number[];
+            registeredWithinMonth: number[];
+            registeredWithinYear: number[];
+            registeredOutsideWeek: number[];
+            registeredOutsideMonth: number[];
+            registeredOutsideYear: number[];
         };
     };
     'charts/ap-request': {
@@ -542,11 +545,14 @@ export type Endpoints = {
             offset?: number | null;
         };
         res: {
-            instance: {
-                dec: number[];
-                inc: number[];
-                total: number[];
-            };
+            deliveredInstances: number[];
+            inboxInstances: number[];
+            stalled: number[];
+            sub: number[];
+            pub: number[];
+            pubsub: number[];
+            subActive: number[];
+            pubActive: number[];
         };
     };
     'charts/hashtag': {
@@ -628,6 +634,7 @@ export type Endpoints = {
                     normal: number[];
                     renote: number[];
                     reply: number[];
+                    withFile: number[];
                 };
             };
             remote: {
@@ -638,6 +645,7 @@ export type Endpoints = {
                     normal: number[];
                     renote: number[];
                     reply: number[];
+                    withFile: number[];
                 };
             };
         };
@@ -665,7 +673,32 @@ export type Endpoints = {
             offset?: number | null;
             userId: User['id'];
         };
-        res: TODO;
+        res: {
+            local: {
+                followings: {
+                    total: number[];
+                    inc: number[];
+                    dec: number[];
+                };
+                followers: {
+                    total: number[];
+                    inc: number[];
+                    dec: number[];
+                };
+            };
+            remote: {
+                followings: {
+                    total: number[];
+                    inc: number[];
+                    dec: number[];
+                };
+                followers: {
+                    total: number[];
+                    inc: number[];
+                    dec: number[];
+                };
+            };
+        };
     };
     'charts/user/notes': {
         req: {
@@ -693,7 +726,16 @@ export type Endpoints = {
             offset?: number | null;
             userId: User['id'];
         };
-        res: TODO;
+        res: {
+            upv: {
+                user: number[];
+                visitor: number[];
+            };
+            pv: {
+                user: number[];
+                visitor: number[];
+            };
+        };
     };
     'charts/user/reactions': {
         req: {
