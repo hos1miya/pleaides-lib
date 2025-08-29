@@ -71,6 +71,13 @@ export type Channels = {
         };
         receives: null;
     };
+    antenna: {
+        params: null;
+        events: {
+            note: (payload: Note) => void;
+        };
+        receives: null;
+    };
     messaging: {
         params: {
             otherparty?: User['id'] | null;

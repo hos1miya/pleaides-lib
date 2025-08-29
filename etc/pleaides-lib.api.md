@@ -216,6 +216,13 @@ export type Channels = {
         };
         receives: null;
     };
+    antenna: {
+        params: null;
+        events: {
+            note: (payload: Note) => void;
+        };
+        receives: null;
+    };
     messaging: {
         params: {
             otherparty?: User['id'] | null;
@@ -301,7 +308,17 @@ type DetailedInstanceMetadata = LiteInstanceMetadata & {
     cacheRemoteFiles: boolean;
     requireSetup: boolean;
     proxyAccountName: string | null;
-    features: TODO_2;
+    features: {
+        registration: boolean;
+        emailRequiredForSignup: boolean;
+        elasticsearch: boolean;
+        hcaptcha: boolean;
+        recaptcha: boolean;
+        turnstile: boolean;
+        objectStorage: boolean;
+        serviceWorker: boolean;
+        miauth: boolean;
+    };
 };
 
 // @public (undocumented)
@@ -2616,10 +2633,6 @@ type LiteInstanceMetadata = {
     repositoryUrl: string;
     feedbackUrl: string;
     disableRegistration: boolean;
-    disableLocalTimeline: boolean;
-    disableGlobalTimeline: boolean;
-    driveCapacityPerLocalUserMb: number;
-    driveCapacityPerRemoteUserMb: number;
     emailRequiredForSignup: boolean;
     enableHcaptcha: boolean;
     hcaptchaSiteKey: string | null;
@@ -2660,11 +2673,7 @@ type LiteInstanceMetadata = {
         avatarDecorationLimit: number;
     };
     enableEmail: boolean;
-    enableTwitterIntegration: boolean;
-    enableGithubIntegration: boolean;
-    enableDiscordIntegration: boolean;
     enableServiceWorker: boolean;
-    emojis: CustomEmoji[];
     defaultDarkTheme: string | null;
     defaultLightTheme: string | null;
     ads: {
@@ -2675,6 +2684,7 @@ type LiteInstanceMetadata = {
         imageUrl: string;
     }[];
     translatorAvailable: boolean;
+    mediaProxy: string;
 };
 
 // @public (undocumented)
@@ -3210,7 +3220,7 @@ type UserSorting = '+follower' | '-follower' | '+createdAt' | '-createdAt' | '+u
 // src/api.types.ts:459:100 - (ae-forgotten-export) The symbol "RegParams" needs to be exported by the entry point index.d.ts
 // src/api.types.ts:604:59 - (ae-forgotten-export) The symbol "PageComponent" needs to be exported by the entry point index.d.ts
 // src/api.types.ts:687:18 - (ae-forgotten-export) The symbol "ShowUserReq" needs to be exported by the entry point index.d.ts
-// src/entities.ts:622:2 - (ae-forgotten-export) The symbol "ModerationLogPayloads" needs to be exported by the entry point index.d.ts
+// src/entities.ts:625:2 - (ae-forgotten-export) The symbol "ModerationLogPayloads" needs to be exported by the entry point index.d.ts
 // src/streaming.types.ts:34:4 - (ae-forgotten-export) The symbol "FIXME" needs to be exported by the entry point index.d.ts
 
 // (No @packageDocumentation comment for this package)

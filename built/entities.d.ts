@@ -316,10 +316,6 @@ export type LiteInstanceMetadata = {
     repositoryUrl: string;
     feedbackUrl: string;
     disableRegistration: boolean;
-    disableLocalTimeline: boolean;
-    disableGlobalTimeline: boolean;
-    driveCapacityPerLocalUserMb: number;
-    driveCapacityPerRemoteUserMb: number;
     emailRequiredForSignup: boolean;
     enableHcaptcha: boolean;
     hcaptchaSiteKey: string | null;
@@ -360,11 +356,7 @@ export type LiteInstanceMetadata = {
         avatarDecorationLimit: number;
     };
     enableEmail: boolean;
-    enableTwitterIntegration: boolean;
-    enableGithubIntegration: boolean;
-    enableDiscordIntegration: boolean;
     enableServiceWorker: boolean;
-    emojis: CustomEmoji[];
     defaultDarkTheme: string | null;
     defaultLightTheme: string | null;
     ads: {
@@ -375,6 +367,7 @@ export type LiteInstanceMetadata = {
         imageUrl: string;
     }[];
     translatorAvailable: boolean;
+    mediaProxy: string;
 };
 export type DetailedInstanceMetadata = LiteInstanceMetadata & {
     pinnedPages: string[];
@@ -382,7 +375,17 @@ export type DetailedInstanceMetadata = LiteInstanceMetadata & {
     cacheRemoteFiles: boolean;
     requireSetup: boolean;
     proxyAccountName: string | null;
-    features: TODO;
+    features: {
+        registration: boolean;
+        emailRequiredForSignup: boolean;
+        elasticsearch: boolean;
+        hcaptcha: boolean;
+        recaptcha: boolean;
+        turnstile: boolean;
+        objectStorage: boolean;
+        serviceWorker: boolean;
+        miauth: boolean;
+    };
 };
 export type InstanceMetadata = LiteInstanceMetadata | DetailedInstanceMetadata;
 export type ServerInfo = {
