@@ -2639,6 +2639,26 @@ type LiteInstanceMetadata = {
     backgroundImageUrl: string | null;
     logoImageUrl: string | null;
     maxNoteTextLength: number;
+    policies: {
+        gtlAvailable: boolean;
+        ltlAvailable: boolean;
+        canPublicNote: boolean;
+        canInvite: boolean;
+        canManageCustomEmojis: boolean;
+        canManageAvatarDecorations: boolean;
+        canHideAds: boolean;
+        driveCapacityMb: number;
+        pinLimit: number;
+        antennaLimit: number;
+        wordMuteLimit: number;
+        webhookLimit: number;
+        clipLimit: number;
+        noteEachClipsLimit: number;
+        userListLimit: number;
+        userEachUserListsLimit: number;
+        rateLimitFactor: number;
+        avatarDecorationLimit: number;
+    };
     enableEmail: boolean;
     enableTwitterIntegration: boolean;
     enableGithubIntegration: boolean;
@@ -3190,7 +3210,7 @@ type UserSorting = '+follower' | '-follower' | '+createdAt' | '-createdAt' | '+u
 // src/api.types.ts:459:100 - (ae-forgotten-export) The symbol "RegParams" needs to be exported by the entry point index.d.ts
 // src/api.types.ts:604:59 - (ae-forgotten-export) The symbol "PageComponent" needs to be exported by the entry point index.d.ts
 // src/api.types.ts:687:18 - (ae-forgotten-export) The symbol "ShowUserReq" needs to be exported by the entry point index.d.ts
-// src/entities.ts:602:2 - (ae-forgotten-export) The symbol "ModerationLogPayloads" needs to be exported by the entry point index.d.ts
+// src/entities.ts:622:2 - (ae-forgotten-export) The symbol "ModerationLogPayloads" needs to be exported by the entry point index.d.ts
 // src/streaming.types.ts:34:4 - (ae-forgotten-export) The symbol "FIXME" needs to be exported by the entry point index.d.ts
 
 // (No @packageDocumentation comment for this package)
