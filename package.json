@@ -1,6 +1,6 @@
 {
 	"name": "pleaides-lib",
-	"version": "1.0.10",
+	"version": "1.0.11",
 	"description": "Library for pleaides-ap",
 	"main": "./built/index.js",
 	"types": "./built/index.d.ts",

@@ -304,7 +304,28 @@ export type CustomEmoji = {
     category: string;
     aliases: string[];
 };
-export type LiteInstanceMetadata = {
+export type InstanceMetadata = LiteInstanceMetadata | DetailedInstanceMetadata;
+export type BasicInstanceMetadata = {
+    emailRequiredForSignup: boolean;
+    enableHcaptcha: boolean;
+    hcaptchaSiteKey: string | null;
+    enableRecaptcha: boolean;
+    recaptchaSiteKey: string | null;
+    enableTurnstile: boolean;
+    turnstileSiteKey: string | null;
+    swPublickey: string | null;
+    bannerUrl: string | null;
+    serverErrorImageUrl: string | null;
+    infoImageUrl: string | null;
+    notFoundImageUrl: string | null;
+    emojiErrorImageUrl: string | null;
+    iconUrl: string | null;
+    maxNoteTextLength: number;
+    enableEmail: boolean;
+    enableServiceWorker: boolean;
+    translatorAvailable: boolean;
+};
+export type LiteInstanceMetadata = BasicInstanceMetadata & {
     maintainerName: string | null;
     maintainerEmail: string | null;
     version: string;
@@ -316,25 +337,10 @@ export type LiteInstanceMetadata = {
     repositoryUrl: string;
     feedbackUrl: string;
     disableRegistration: boolean;
-    emailRequiredForSignup: boolean;
-    enableHcaptcha: boolean;
-    hcaptchaSiteKey: string | null;
-    enableRecaptcha: boolean;
-    recaptchaSiteKey: string | null;
-    enableTurnstile: boolean;
-    turnstileSiteKey: string | null;
-    swPublickey: string | null;
     themeColor: string | null;
     mascotImageUrl: string | null;
-    bannerUrl: string | null;
-    serverErrorImageUrl: string | null;
-    infoImageUrl: string | null;
-    notFoundImageUrl: string | null;
-    emojiErrorImageUrl: string | null;
-    iconUrl: string | null;
     backgroundImageUrl: string | null;
     logoImageUrl: string | null;
-    maxNoteTextLength: number;
     policies: {
         gtlAvailable: boolean;
         ltlAvailable: boolean;
@@ -355,8 +361,6 @@ export type LiteInstanceMetadata = {
         rateLimitFactor: number;
         avatarDecorationLimit: number;
     };
-    enableEmail: boolean;
-    enableServiceWorker: boolean;
     defaultDarkTheme: string | null;
     defaultLightTheme: string | null;
     ads: {
@@ -366,10 +370,7 @@ export type LiteInstanceMetadata = {
         url: string;
         imageUrl: string;
     }[];
-    translatorAvailable: boolean;
     mediaProxy: string;
-    enableAuthorizedFetch: boolean;
-    enableBotProtectionForAuthorizedFetch: boolean;
 };
 export type DetailedInstanceMetadata = LiteInstanceMetadata & {
     pinnedPages: string[];
@@ -389,7 +390,47 @@ export type DetailedInstanceMetadata = LiteInstanceMetadata & {
         miauth: boolean;
     };
 };
-export type InstanceMetadata = LiteInstanceMetadata | DetailedInstanceMetadata;
+export type AdminInstanceMetadata = BasicInstanceMetadata & {
+    cacheRemoteFiles: boolean;
+    mascotImageUrl: string | null;
+    userStarForReactionFallback?: boolean;
+    pinnedUsers?: string[];
+    hiddenTags?: string[];
+    blockedHosts?: string[];
+    blockedSoftwares?: string[];
+    hcaptchaSecretKey?: string | null;
+    recaptchaSecretKey?: string | null;
+    turnstileSecretKey?: string | null;
+    sensitiveMediaDetection?: string;
+    sensitiveMediaDetectionSensitivity?: string;
+    setSensitiveFlagAutomatically?: boolean;
+    enableSensitiveMediaDetectionForVideos?: boolean;
+    proxyAccountId?: string | null;
+    summaryProxy?: string | null;
+    email?: string | null;
+    smtpSecure?: boolean;
+    smtpHost?: string | null;
+    smtpPort?: number | null;
+    smtpUser?: string | null;
+    smtpPass?: string | null;
+    swPrivateKey?: string | null;
+    useObjectStorage?: boolean;
+    objectStorageBaseUrl?: string | null;
+    objectStorageBucket?: string | null;
+    objectStoragePrefix?: string | null;
+    objectStorageEndpoint?: string | null;
+    objectStorageRegion?: string | null;
+    objectStoragePort?: number | null;
+    objectStorageAccessKey?: string | null;
+    objectStorageSecretKey?: string | null;
+    objectStorageUseSSL?: boolean;
+    objectStorageUseProxy?: boolean;
+    objectStorageSetPublicRead?: boolean;
+    enableIpLogging?: boolean;
+    enableActiveEmailValidation?: boolean;
+    enableAuthorizedFetch: boolean;
+    enableBotProtectionForAuthorizedFetch: boolean;
+};
 export type ServerInfo = {
     machine: string;
     cpu: {

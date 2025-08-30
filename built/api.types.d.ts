@@ -1,4 +1,4 @@
-import type { Ad, Announcement, Antenna, App, AuthSession, Blocking, Clip, DateString, DetailedInstanceMetadata, DriveFile, DriveFolder, Following, FollowingFolloweePopulated, FollowingFollowerPopulated, FollowRequest, GalleryPost, Instance, LiteInstanceMetadata, MeDetailed, Note, NoteFavorite, OriginType, Page, ServerInfo, Stats, User, UserDetailed, UserGroup, UserList, UserSorting, Notification, NoteReaction, Signin, MessagingMessage, AvatarDecoration, GetAvatarDecorationsResponse, Role } from './entities';
+import type { Ad, Announcement, Antenna, App, AuthSession, Blocking, Clip, DateString, DetailedInstanceMetadata, DriveFile, DriveFolder, Following, FollowingFolloweePopulated, FollowingFollowerPopulated, FollowRequest, GalleryPost, Instance, LiteInstanceMetadata, MeDetailed, Note, NoteFavorite, OriginType, Page, ServerInfo, Stats, User, UserDetailed, UserGroup, UserList, UserSorting, Notification, NoteReaction, Signin, MessagingMessage, AvatarDecoration, GetAvatarDecorationsResponse, Role, AdminInstanceMetadata } from './entities';
 type TODO = Record<string, any> | null;
 type RegParams = any;
 type PageComponent = any;
@@ -93,7 +93,7 @@ export type Endpoints = {
         res: TODO;
     };
     'admin/update-meta': {
-        req: TODO;
+        req: Partial<AdminInstanceMetadata>;
         res: TODO;
     };
     'admin/vacuum': {
@@ -286,7 +286,7 @@ export type Endpoints = {
     };
     'admin/meta': {
         req: TODO;
-        res: TODO;
+        res: AdminInstanceMetadata;
     };
     'admin/moderators/add': {
         req: TODO;

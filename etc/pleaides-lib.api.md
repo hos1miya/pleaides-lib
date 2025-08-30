@@ -19,6 +19,49 @@ export type Acct = {
 type Ad = TODO_2;
 
 // @public (undocumented)
+type AdminInstanceMetadata = BasicInstanceMetadata & {
+    cacheRemoteFiles: boolean;
+    mascotImageUrl: string | null;
+    userStarForReactionFallback?: boolean;
+    pinnedUsers?: string[];
+    hiddenTags?: string[];
+    blockedHosts?: string[];
+    blockedSoftwares?: string[];
+    hcaptchaSecretKey?: string | null;
+    recaptchaSecretKey?: string | null;
+    turnstileSecretKey?: string | null;
+    sensitiveMediaDetection?: string;
+    sensitiveMediaDetectionSensitivity?: string;
+    setSensitiveFlagAutomatically?: boolean;
+    enableSensitiveMediaDetectionForVideos?: boolean;
+    proxyAccountId?: string | null;
+    summaryProxy?: string | null;
+    email?: string | null;
+    smtpSecure?: boolean;
+    smtpHost?: string | null;
+    smtpPort?: number | null;
+    smtpUser?: string | null;
+    smtpPass?: string | null;
+    swPrivateKey?: string | null;
+    useObjectStorage?: boolean;
+    objectStorageBaseUrl?: string | null;
+    objectStorageBucket?: string | null;
+    objectStoragePrefix?: string | null;
+    objectStorageEndpoint?: string | null;
+    objectStorageRegion?: string | null;
+    objectStoragePort?: number | null;
+    objectStorageAccessKey?: string | null;
+    objectStorageSecretKey?: string | null;
+    objectStorageUseSSL?: boolean;
+    objectStorageUseProxy?: boolean;
+    objectStorageSetPublicRead?: boolean;
+    enableIpLogging?: boolean;
+    enableActiveEmailValidation?: boolean;
+    enableAuthorizedFetch: boolean;
+    enableBotProtectionForAuthorizedFetch: boolean;
+};
+
+// @public (undocumented)
 type Announcement = {
     id: ID;
     createdAt: DateString;
@@ -111,6 +154,28 @@ type AvatarDecoration = {
     roleIdsThatCanBeUsedThisDecoration: string[];
     remoteId: string;
     host: string | null;
+};
+
+// @public (undocumented)
+type BasicInstanceMetadata = {
+    emailRequiredForSignup: boolean;
+    enableHcaptcha: boolean;
+    hcaptchaSiteKey: string | null;
+    enableRecaptcha: boolean;
+    recaptchaSiteKey: string | null;
+    enableTurnstile: boolean;
+    turnstileSiteKey: string | null;
+    swPublickey: string | null;
+    bannerUrl: string | null;
+    serverErrorImageUrl: string | null;
+    infoImageUrl: string | null;
+    notFoundImageUrl: string | null;
+    emojiErrorImageUrl: string | null;
+    iconUrl: string | null;
+    maxNoteTextLength: number;
+    enableEmail: boolean;
+    enableServiceWorker: boolean;
+    translatorAvailable: boolean;
 };
 
 // @public (undocumented)
@@ -217,9 +282,22 @@ export type Channels = {
         receives: null;
     };
     antenna: {
-        params: null;
+        params: {
+            antennaId?: string;
+        };
         events: {
             note: (payload: Note) => void;
+        };
+        receives: null;
+    };
+    userList: {
+        params: {
+            listId?: string;
+        };
+        events: {
+            note: (payload: Note) => void;
+            userAdded: (payload: User) => void;
+            userRemoved: (payload: User) => void;
         };
         receives: null;
     };
@@ -434,7 +512,7 @@ export type Endpoints = {
         res: TODO;
     };
     'admin/update-meta': {
-        req: TODO;
+        req: Partial<AdminInstanceMetadata>;
         res: TODO;
     };
     'admin/vacuum': {
@@ -627,7 +705,7 @@ export type Endpoints = {
     };
     'admin/meta': {
         req: TODO;
-        res: TODO;
+        res: AdminInstanceMetadata;
     };
     'admin/moderators/add': {
         req: TODO;
@@ -2482,9 +2560,11 @@ declare namespace entities {
         Notification_2 as Notification,
         MessagingMessage,
         CustomEmoji,
+        InstanceMetadata,
+        BasicInstanceMetadata,
         LiteInstanceMetadata,
         DetailedInstanceMetadata,
-        InstanceMetadata,
+        AdminInstanceMetadata,
         ServerInfo,
         Stats,
         Page,
@@ -2621,7 +2701,7 @@ type InstanceMetadata = LiteInstanceMetadata | DetailedInstanceMetadata;
 function isAPIError(reason: Record<PropertyKey, unknown>): reason is APIError;
 
 // @public (undocumented)
-type LiteInstanceMetadata = {
+type LiteInstanceMetadata = BasicInstanceMetadata & {
     maintainerName: string | null;
     maintainerEmail: string | null;
     version: string;
@@ -2633,25 +2713,10 @@ type LiteInstanceMetadata = {
     repositoryUrl: string;
     feedbackUrl: string;
     disableRegistration: boolean;
-    emailRequiredForSignup: boolean;
-    enableHcaptcha: boolean;
-    hcaptchaSiteKey: string | null;
-    enableRecaptcha: boolean;
-    recaptchaSiteKey: string | null;
-    enableTurnstile: boolean;
-    turnstileSiteKey: string | null;
-    swPublickey: string | null;
     themeColor: string | null;
     mascotImageUrl: string | null;
-    bannerUrl: string | null;
-    serverErrorImageUrl: string | null;
-    infoImageUrl: string | null;
-    notFoundImageUrl: string | null;
-    emojiErrorImageUrl: string | null;
-    iconUrl: string | null;
     backgroundImageUrl: string | null;
     logoImageUrl: string | null;
-    maxNoteTextLength: number;
     policies: {
         gtlAvailable: boolean;
         ltlAvailable: boolean;
@@ -2672,8 +2737,6 @@ type LiteInstanceMetadata = {
         rateLimitFactor: number;
         avatarDecorationLimit: number;
     };
-    enableEmail: boolean;
-    enableServiceWorker: boolean;
     defaultDarkTheme: string | null;
     defaultLightTheme: string | null;
     ads: {
@@ -2683,7 +2746,6 @@ type LiteInstanceMetadata = {
         url: string;
         imageUrl: string;
     }[];
-    translatorAvailable: boolean;
     mediaProxy: string;
 };
 
@@ -3215,12 +3277,12 @@ type UserSorting = '+follower' | '-follower' | '+createdAt' | '-createdAt' | '+u
 
 // Warnings were encountered during analysis:
 //
-// src/api.types.ts:26:32 - (ae-forgotten-export) The symbol "TODO" needs to be exported by the entry point index.d.ts
-// src/api.types.ts:28:25 - (ae-forgotten-export) The symbol "NoParams" needs to be exported by the entry point index.d.ts
-// src/api.types.ts:459:100 - (ae-forgotten-export) The symbol "RegParams" needs to be exported by the entry point index.d.ts
-// src/api.types.ts:604:59 - (ae-forgotten-export) The symbol "PageComponent" needs to be exported by the entry point index.d.ts
-// src/api.types.ts:687:18 - (ae-forgotten-export) The symbol "ShowUserReq" needs to be exported by the entry point index.d.ts
-// src/entities.ts:625:2 - (ae-forgotten-export) The symbol "ModerationLogPayloads" needs to be exported by the entry point index.d.ts
+// src/api.types.ts:27:32 - (ae-forgotten-export) The symbol "TODO" needs to be exported by the entry point index.d.ts
+// src/api.types.ts:29:25 - (ae-forgotten-export) The symbol "NoParams" needs to be exported by the entry point index.d.ts
+// src/api.types.ts:460:100 - (ae-forgotten-export) The symbol "RegParams" needs to be exported by the entry point index.d.ts
+// src/api.types.ts:605:59 - (ae-forgotten-export) The symbol "PageComponent" needs to be exported by the entry point index.d.ts
+// src/api.types.ts:688:18 - (ae-forgotten-export) The symbol "ShowUserReq" needs to be exported by the entry point index.d.ts
+// src/entities.ts:671:2 - (ae-forgotten-export) The symbol "ModerationLogPayloads" needs to be exported by the entry point index.d.ts
 // src/streaming.types.ts:34:4 - (ae-forgotten-export) The symbol "FIXME" needs to be exported by the entry point index.d.ts
 
 // (No @packageDocumentation comment for this package)

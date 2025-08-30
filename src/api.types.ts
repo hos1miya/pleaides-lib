@@ -6,6 +6,7 @@ import type {
 	AvatarDecoration,
 	GetAvatarDecorationsResponse,
 	Role,
+	AdminInstanceMetadata,
 } from './entities';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -42,7 +43,7 @@ export type Endpoints = {
 	'admin/suspend-user': { req: TODO; res: TODO; };
 	'admin/unsilence-user': { req: TODO; res: TODO; };
 	'admin/unsuspend-user': { req: TODO; res: TODO; };
-	'admin/update-meta': { req: TODO; res: TODO; };
+	'admin/update-meta': { req: Partial<AdminInstanceMetadata>; res: TODO; };
 	'admin/vacuum': { req: TODO; res: TODO; };
 	'admin/accounts/create': { req: TODO; res: TODO; };
 	'admin/ad/create': { req: TODO; res: TODO; };
@@ -80,7 +81,7 @@ export type Endpoints = {
 	'admin/federation/update-instance': { req: TODO; res: TODO; };
 	'admin/get-user-ips': { req: { userId: User['id']; }; res: TODO; };
 	'admin/update-user-note': { req: { userId: User['id']; text: string; }; res: TODO; };
-	'admin/meta': { req: TODO; res: TODO; };
+	'admin/meta': { req: TODO; res: AdminInstanceMetadata; };
 	'admin/moderators/add': { req: TODO; res: TODO; };
 	'admin/moderators/remove': { req: TODO; res: TODO; };
 	'admin/promo/create': { req: TODO; res: TODO; };
